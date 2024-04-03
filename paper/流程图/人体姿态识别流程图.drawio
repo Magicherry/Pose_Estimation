@@ -1,0 +1,106 @@
+<mxfile host="Electron" modified="2024-04-03T09:01:03.725Z" agent="Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) draw.io/24.1.0 Chrome/120.0.6099.109 Electron/28.1.0 Safari/537.36" etag="wC6EMt28_uOlx68hc4SE" version="24.1.0" type="device">
+  <diagram name="第 1 页" id="lKCF2zGpw34KYaDRGU9y">
+    <mxGraphModel dx="1150" dy="770" grid="0" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-15" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="58xgu1jL_Fykb2_MQMKn-1" target="58xgu1jL_Fykb2_MQMKn-14">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-1" value="右上肢区域与标准姿态右上肢区域比较" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="391" y="74" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-5" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=flexArrow;" edge="1" parent="1" source="58xgu1jL_Fykb2_MQMKn-3" target="58xgu1jL_Fykb2_MQMKn-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-3" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;开始&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="161" y="74" width="120" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-7" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=flexArrow;" edge="1" parent="1" source="58xgu1jL_Fykb2_MQMKn-4" target="58xgu1jL_Fykb2_MQMKn-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-4" value="一组人体姿态骨骼点二维坐标" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="131" y="214" width="180" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-9" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=flexArrow;" edge="1" parent="1" source="58xgu1jL_Fykb2_MQMKn-6" target="58xgu1jL_Fykb2_MQMKn-8">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-6" value="坐标系变化" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="161" y="329" width="120" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-11" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=flexArrow;" edge="1" parent="1" source="58xgu1jL_Fykb2_MQMKn-8" target="58xgu1jL_Fykb2_MQMKn-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-37" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="58xgu1jL_Fykb2_MQMKn-8" target="58xgu1jL_Fykb2_MQMKn-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-8" value="评估流程" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="166" y="424" width="110" height="40" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-13" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;shape=flexArrow;" edge="1" parent="1" source="58xgu1jL_Fykb2_MQMKn-10" target="58xgu1jL_Fykb2_MQMKn-12">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-10" value="输出匹配到的标准姿态序号与评估值" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="96" y="644" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-12" value="&lt;font style=&quot;font-size: 14px;&quot;&gt;结束&lt;/font&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="161" y="752" width="120" height="50" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-17" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="58xgu1jL_Fykb2_MQMKn-14" target="58xgu1jL_Fykb2_MQMKn-16">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-14" value="依次按骨骼点 {1,2,3} 的顺序&lt;div&gt;逐个比较骨骼点与标准姿态骨骼点的相似度&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="371" y="164" width="280" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-19" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="58xgu1jL_Fykb2_MQMKn-16" target="58xgu1jL_Fykb2_MQMKn-18">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-16" value="右下肢区域与标准姿态右下肢区域比较" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="391" y="244" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-21" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="58xgu1jL_Fykb2_MQMKn-18" target="58xgu1jL_Fykb2_MQMKn-20">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-32" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="58xgu1jL_Fykb2_MQMKn-18">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="731" y="364" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-18" value="依次按骨骼点 {7,8,9} 的顺序&lt;div&gt;逐个比较骨骼点与标准姿态骨骼点的相似度&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="371" y="334" width="280" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-23" value="" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="58xgu1jL_Fykb2_MQMKn-20" target="58xgu1jL_Fykb2_MQMKn-22">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-20" value="左下肢区域与标准姿态左下肢区域比较" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="391" y="424" width="240" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-33" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;endArrow=none;endFill=0;" edge="1" parent="1" source="58xgu1jL_Fykb2_MQMKn-22">
+          <mxGeometry relative="1" as="geometry">
+            <mxPoint x="731" y="544" as="targetPoint" />
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-35" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0.5;exitY=1;exitDx=0;exitDy=0;entryX=0.75;entryY=0;entryDx=0;entryDy=0;" edge="1" parent="1" source="58xgu1jL_Fykb2_MQMKn-22" target="58xgu1jL_Fykb2_MQMKn-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-22" value="依次按骨骼点 {10,11.12} 的顺序&lt;div&gt;逐个比较骨骼点与标准姿态骨骼点的相似度&lt;/div&gt;" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="371" y="514" width="280" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-27" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=0;exitY=0.5;exitDx=0;exitDy=0;entryX=1;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="58xgu1jL_Fykb2_MQMKn-26" target="58xgu1jL_Fykb2_MQMKn-10">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-26" value="记录匹配过程中产生的相似度差值" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+          <mxGeometry x="401" y="644" width="250" height="60" as="geometry" />
+        </mxCell>
+        <mxCell id="58xgu1jL_Fykb2_MQMKn-36" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;exitX=1;exitY=0.5;exitDx=0;exitDy=0;entryX=0.996;entryY=0.622;entryDx=0;entryDy=0;entryPerimeter=0;" edge="1" parent="1" source="58xgu1jL_Fykb2_MQMKn-14" target="58xgu1jL_Fykb2_MQMKn-26">
+          <mxGeometry relative="1" as="geometry">
+            <Array as="points">
+              <mxPoint x="731" y="174" />
+              <mxPoint x="731" y="681" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

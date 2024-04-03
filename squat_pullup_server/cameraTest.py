@@ -6,7 +6,7 @@ import time
 
 def main():
     # 创建一个VideoCapture对象，0表示第一个摄像头（如果有多个摄像头，可以尝试使用1、2等）
-    cap = cv2.VideoCapture(0)
+    cap = cv2.VideoCapture(1)
 
     # cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
     # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)

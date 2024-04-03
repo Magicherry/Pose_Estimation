@@ -33,23 +33,23 @@
 
 ## 4. 文件目录说明
 
-- base_data/: 存放基准姿势数据。
+- `base_data/`: 存放基准姿势数据。
 
-- movenet/: 包含模型主体。
+- `movenet/`: 包含模型主体。
 
-- result/: 输出检测结果视频的目录。
+- `result/`: 输出检测结果视频的目录。
 
-- utils/: 放置 Movenet 姿态检测的辅助工具。
+- `utils/`: 放置 Movenet 姿态检测的辅助工具。
 
-- video/: 包含检测所需的视频素材。
+- `video/`: 包含检测所需的视频素材。
 
-- main.py: 运动姿态识别的主程序。
+- `main.py`: 运动姿态识别的主程序。
 
-- cameraTest.py: 用于摄像头测试的程序（仅供测试使用）。
+- `cameraTest.py`: 用于摄像头测试的程序（仅供测试使用）。
 
-- setup.py: Python 编译优化工具。
+- `setup.py`: Python 编译优化工具。
 
-- 17pose.png: 包含17个人体骨骼点的参考图片。
+- `17pose.png`: 包含17个人体骨骼点的参考图片。
 
 ## 5. 环境配置
 
