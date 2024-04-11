@@ -1,27 +1,35 @@
-import os
-import signal
+import copy
 import math
+import os
+import queue
+import signal
+import threading
+import time
+from datetime import datetime
+
 import cv2
 import numpy as np
-import threading
-import queue
-import copy
-import time
-from sklearn.neighbors import BallTree
 from sklearn.metrics.pairwise import cosine_similarity
-from utils.utils import calculate_angle, plot_skeleton
+from sklearn.neighbors import BallTree
+
 from movenet.movenet import Movenet
+from utils.utils import plot_skeleton
 
 
 def frame_reader(video_path, input_queue):
     # 从本地读取视频
     cap = cv2.VideoCapture(video_path)
+
+    # cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+    # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+    # cap.set(cv2.CAP_PROP_FPS, 30)
+
     # 获取原视频帧率
     fps = cap.get(cv2.CAP_PROP_FPS)
     # 获取原视频窗口大小
     width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
     height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
-    print("fps: {}, width: {}, height: {}".format(round(fps), width, height))
+    print(f"分辨率: {width} x {height} 帧率: {fps}")
     frame_num = 0
     while cap.isOpened() and frame_reader_flag:
         # 读视频帧
@@ -40,9 +48,10 @@ def cosin_distance_matching(pose_vector1, pose_vector2):  # 余弦相似度计�
     pose_end = 2 * keypoint_num
     pose_vector1 = pose_vector1[0:pose_end]
     pose_vector2 = pose_vector2[0:pose_end]
-    t0 = time.time()
+    # t0 = time.time()
+    # cosine_sim = np.dot(pose_vector1, pose_vector2) / (norm(pose_vector1, 2)*norm(pose_vector2, 2))
     cosine_sim = cosine_similarity(np.reshape(pose_vector1, (1, -1)), np.reshape(pose_vector2, (1, -1)))
-    distance = 2 * (1 - cosine_sim)
+    distance = 2 * (1 - cosine_sim[0][0])
     return math.sqrt(distance)
 
 
@@ -123,7 +132,7 @@ def filter_match(match, dist_thresh, action_image_num):  # 按照相似度阈值
     return filtered_match
 
 
-def get_body_center(pose):
+def get_body_center(pose):  # 获取身体骨骼中心
     # if len(pose) == 0:
     #     return None
     body_center = np.array([0., 0.])
@@ -215,7 +224,7 @@ def update_best_pull_up_score(pose, best_pull_up_score):
 # 主函数
 def main():
     # 初始化参数
-    use_camera = False
+    use_camera = True
     if not use_camera:
         sport_type = "pull_up"  # squat pull_up
         video_path = "video/{}/0.mp4".format(sport_type)
@@ -224,22 +233,28 @@ def main():
     else:
         sport_type = "squat"  # squat pull_up 起始为深蹲
         video_path = 0
-        video_result_path = "result/camera/camera_res.mp4"
+
+        # 获取当前日期时间
+        current_time = datetime.now().strftime("%Y-%m-%d_%H-%M-%S")
+
+        # 生成新的文件名
+        result_dir = "result/camera/"
+        video_result_path = os.path.join(result_dir, f"camera_res_{current_time}.mp4")
 
     match_dist_thresh = 0.3  # 相似度阈值，适合余弦相似度函数
     global frame_reader_flag
     frame_reader_flag = True  # 是否取帧的标志位
-    input_video_h, input_video_w = None, None  # 输入帧的尺寸以及写视频的尺寸
+    # input_video_h, input_video_w = None, None  # 输入帧的尺寸以及写视频的尺寸
     draw_res = True  # 是否画上检测结果
     draw_pose = True  # 是否画上检测到的骨骼点
 
     # 模型初始化
-    model_name = "movenet_thunder"  # movenet_lightning  movenet_thunder
+    model_name = "movenet_lightning"  # movenet_lightning  movenet_thunder
     pose_detector = Movenet(model_name)
 
     # 建立搜索树
     global keypoint_num
-    keypoint_num = 17  # movenet检测人体17个关键点
+    keypoint_num = 17  # movenet可以检测人体17个关键点，具体见17pose.png
     action_image_num = 2  # 每个运动类别中每个姿态图的比照数量
     base_data_path = "base_data/squat"
     tree_1, base_pose_list_1, base_pose_category_list_1 = make_search_tree(pose_detector, base_data_path,
@@ -267,27 +282,35 @@ def main():
     best_pull_up_score = 0
     best_score = 0
 
+    # 拉流
+    cap = cv2.VideoCapture(video_path)
+
+    # cap.set(cv2.CAP_PROP_FRAME_WIDTH, 1920)
+    # cap.set(cv2.CAP_PROP_FRAME_HEIGHT, 1080)
+    # cap.set(cv2.CAP_PROP_FPS, 30)
+
+    # 获取原视频帧率
+    fps = cap.get(cv2.CAP_PROP_FPS)
+    # 获取原视频窗口大小
+    input_video_w = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+    input_video_h = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+    fourcc = cv2.VideoWriter_fourcc(*'mp4v')
+    video_writer = cv2.VideoWriter(video_result_path, fourcc, fps,
+                                   (input_video_w, input_video_h))  # 写视频的参数设置
+
     # 主循环
-    count = 0  # 次数
+    count = 0
     change_sport_type = False  # 是否切换运动类别
     no_player_cnt = 0
     no_player_cnt_max = 60
     pose_counter = []  # 用于统计运动次数的队列
+    frame_num = -1
     while True:
-        if not input_queue.empty():
-            # 取出视频帧
-            frame_num, frame = input_queue.get()
-            # 水平翻转
-            # frame = cv2.flip(frame, 1)
-            if frame_num == -1:  # 当输入是视频文件的最后一帧时
-                frame_reader_flag = False  # 停止读取视频
-                break
-            if input_video_h is None and input_video_w is None:  # 取输入的第一帧作为保存视频的尺寸，后续不再更新
-                input_video_h, input_video_w, _ = frame.shape
-                # 写视频
-                fourcc = cv2.VideoWriter_fourcc(*'mp4v')
-                video_writer = cv2.VideoWriter(video_result_path, fourcc, 30,
-                                               (input_video_w, input_video_h))  # 写视频的参数设置
+        t1 = time.time()
+        # 读视频帧
+        ret, frame = cap.read()
+        if ret:  # 判断是否读取成功
+            frame_num += 1
 
             # 当使用摄像头且按键切换运动类别时，这些参数和变量要重置
             if use_camera and change_sport_type:
@@ -305,7 +328,6 @@ def main():
                     tree = tree_2
                     base_pose_category_list = base_pose_category_list_2
 
-            t1 = time.time()
             results = pose_detector.predict(frame, verbose=False)  # 人体骨骼点推理
             pose, pose_vector = get_pose_vector_from_pose_detector(results, frame.shape[0], frame.shape[1])  # 归一化操作
             pose_category = None
@@ -341,24 +363,25 @@ def main():
                     break
 
             t2 = time.time()
-            # print("frame {} use time {}ms".format(frame_num, round((t2-t1)*1000)))
-            fps = int(1 / (t2 - t1))
+            # print("frame {} use time {}ms".format(frame_num, round((t2-t1)*1000))) # 打印每帧处理速度
+            process_fps = int(1 / (t2 - t1))
             if draw_res:
-                line_interval = 35
+                line_interval = 40
                 line = 70
-                cv2.putText(frame, "sport_type: {}".format(sport_type), (30, line), 0, 1, (255, 255, 255), 2,
+                cv2.putText(frame, "Sport Type: {}".format(sport_type), (30, line), 0, 1, (255, 255, 255), 2,
                             cv2.LINE_AA)
                 line += line_interval
-                cv2.putText(frame, "frame_num: {}".format(frame_num), (30, line), 0, 1, (255, 255, 255), 2, cv2.LINE_AA)
+                cv2.putText(frame, "Frame Num: {}".format(frame_num), (30, line), 0, 1, (255, 255, 255), 2, cv2.LINE_AA)
                 line += line_interval
-                cv2.putText(frame, "fps: {}".format(fps), (30, line), 0, 1, (255, 255, 255), 2, cv2.LINE_AA)
-                line += line_interval
-                cv2.putText(frame, "category: {}".format(pose_category), (30, line), 0, 1, (255, 255, 255), 2,
+                cv2.putText(frame, "Process Fps: {}".format(process_fps), (30, line), 0, 1, (255, 255, 255), 2,
                             cv2.LINE_AA)
                 line += line_interval
-                cv2.putText(frame, "count: {}".format(count), (30, line), 0, 1, (255, 255, 255), 2, cv2.LINE_AA)
+                cv2.putText(frame, "Category: {}".format(pose_category), (30, line), 0, 1, (255, 255, 255), 2,
+                            cv2.LINE_AA)
                 line += line_interval
-                cv2.putText(frame, "score: {}".format(best_score), (30, line), 0, 1, (255, 255, 255), 2, cv2.LINE_AA)
+                cv2.putText(frame, "Count: {}".format(count), (30, line), 0, 1, (255, 255, 255), 2, cv2.LINE_AA)
+                line += line_interval
+                cv2.putText(frame, "Score: {}".format(best_score), (30, line), 0, 1, (255, 255, 255), 2, cv2.LINE_AA)
 
             # 画骨骼点
             if draw_pose:
@@ -367,16 +390,17 @@ def main():
             video_writer.write(frame)
             # 显示视频
             cv2.imshow("frame", frame)
+            cv2.setWindowTitle("frame", "Pose Estimation")
             # 按键退出
             keyValue = cv2.waitKey(1)  # 捕获键值
-            if keyValue & 0xFF == ord('Q'):  # Q键
+            if keyValue & 0xFF == 27:  # esc键退出程序
                 frame_reader_flag = False  # 停止读取视频
                 break
-            elif keyValue & 0xFF == ord('1') and use_camera:  # 1键
+            elif keyValue & 0xFF == ord('1') and use_camera:  # 1键 切换为 深蹲
                 if sport_type != "squat":
                     sport_type = "squat"
                     change_sport_type = True
-            elif keyValue & 0xFF == ord('2') and use_camera:  # 2键
+            elif keyValue & 0xFF == ord('2') and use_camera:  # 2键 切换为 引体向上
                 if sport_type != "pull_up":
                     sport_type = "pull_up"
                     change_sport_type = True
