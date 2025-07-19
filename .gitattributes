@@ -1,0 +1,33 @@
+# Use LF for all Python source files
+*.py text eol=lf
+
+# Use LF for Jupyter Notebooks
+*.ipynb text eol=lf
+
+# Use LF for shell scripts, Markdown, YAML, JSON, TOML, etc.
+*.sh text eol=lf
+*.md text eol=lf
+*.yml text eol=lf
+*.yaml text eol=lf
+*.json text eol=lf
+*.toml text eol=lf
+
+# Use LF for CSV and TSV data files
+*.csv text eol=lf
+*.tsv text eol=lf
+
+# For Windows batch scripts, use CRLF
+*.bat text eol=crlf
+*.cmd text eol=crlf
+
+# Treat images and other binary files as binary
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.ico binary
+*.pdf binary
+*.zip binary
+
+# Default all other text files to LF endings
+* text=auto eol=lf

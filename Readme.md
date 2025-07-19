@@ -1,87 +1,84 @@
-# 基于视频的运动标准度检测算法说明文档
+# Video-based Exercise Standardness Detection Algorithm Documentation
 
-## 1. 项目简介
-本项目是一个基于 Movenet 的运动标准度检测项目，旨在通过实时姿势检测和相似度匹配来评估运动动作的标准度，并提供相应的评分和统计信息。
+## 1. Project Overview
+This project is an exercise standardness detection system based on Movenet. It evaluates the accuracy of exercise movements by real-time pose estimation and similarity matching, providing scoring and statistical feedback.
 
-## 2. 功能实现
-- 实时姿势检测：使用 Movenet 模型检测视频中的人体骨骼点，提取关键信息。
-- 相似度匹配：将检测到的姿势与预先定义好的基准姿势进行相似度匹配，用于判断运动动作的标准度。
-- 运动类型切换：支持实时切换不同的运动类型，如深蹲和引体向上。
-- 运动次数统计：统计每种运动动作的完成次数。
-- 评分显示：根据运动标准度评估结果，显示实时评分和最佳评分。
+## 2. Features
+- Real-time pose estimation: Uses the Movenet model to detect human skeletal keypoints in video frames and extract crucial information.
+- Similarity matching: Compares detected poses with pre-defined reference poses to determine the standardness of movements.
+- Exercise type switching: Supports real-time switching between different exercise types, such as squats and pull-ups.
+- Repetition counting: Counts the number of completed repetitions for each exercise.
+- Scoring display: Shows real-time scores and best scores based on movement evaluation results.
 
-## 3. 实现细节
+## 3. Implementation Details
 
-### 3.1 检测思路
+### 3.1 Detection Logic
+For each frame, the skeletal keypoints are captured and compared with the reference library (base_data) to calculate similarity. Each exercise has two postures, “up” and “down.” Completing a down and up sequence counts as one repetition and is scored accordingly.
 
-抓取当前帧的骨骼点与标准库 (base_data) 进行相似度计算，每个运动都有 up 和 down 两种姿态，先后完成一次 down 和 up 算识别到一次，当做完一次时给出该次评价分数。
+### 3.2 Pose Estimation
+The Movenet model is used for human pose detection in video frames, extracting key skeletal points.
 
-### 3.2 姿势检测
-使用 Movenet 模型对视频帧进行人体姿势检测，提取关键的人体骨骼点。
+### 3.3 Similarity Matching
+The detected pose vectors are compared with the predefined reference poses using cosine similarity, calculating the distance to evaluate the standardness of the movement.
 
-### 3.3 相似度匹配
-将检测到的姿势向量与预先定义好的基准姿势进行余弦相似度匹配，计算相似度距离，用于判断运动动作的标准度。
+### 3.4 Exercise Type Switching
+Real-time keyboard input allows users to switch between different exercise types, including squats and pull-ups.
 
-### 3.4 运动类型切换
-支持实时按键切换不同的运动类型，包括深蹲和引体向上。
+### 3.5 Repetition Counting
+Based on real-time pose detection and exercise type, the number of repetitions for each exercise is counted.
 
-### 3.5 运动次数统计
-根据实时检测到的姿势和运动类型，统计每种运动动作的完成次数。
+### 3.6 Scoring Display
+Based on similarity matching results and repetition counting, real-time scores and best scores are calculated and displayed in the video.
 
-### 3.6 评分显示
-根据相似度匹配结果和运动次数统计，计算实时评分和最佳评分，并在视频中显示。
+## 4. Directory Structure
 
-## 4. 文件目录说明
+- `base_data/` stores reference pose data.
+- `movenet/` contains the main model files.
+- `result/` outputs the processed result videos.
+- `utils/` holds utility scripts for Movenet pose detection.
+- `video/` includes video materials needed for detection.
+- `main.py` is the main program for exercise pose recognition.
+- `cameraTest.py` is used for camera testing (for testing purposes only).
+- `setup.py` is the Python build optimization tool.
+- `17pose.png` is a reference image with 17 human keypoints.
 
-- `base_data/`: 存放基准姿势数据。
+## 5. Environment Setup
 
-- `movenet/`: 包含模型主体。
+1. **Environment Installation**: Extract `movenet.tar.gz` from the project into your `miniconda3` (or `conda3`) `/envs` directory.
+2. **Open Terminal**: Launch the included `miniconda3 prompt` command line tool.
+3. **Activate Environment**: Enter `conda activate movenet`.
+4. **Change Directory**: Use the `cd` command to navigate to the project directory.
+5. **Select Mode**: At the beginning of the `main` function, choose whether to enable the camera and select the exercise type.
+6. **Run Command**: Execute `python main.py` to start the program.
 
-- `result/`: 输出检测结果视频的目录。
+## 6. Instructions
 
-- `utils/`: 放置 Movenet 姿态检测的辅助工具。
+- Run the `main()` function to start the project.
+- Switch exercise types with keyboard shortcuts: press `1` for squats and `2` for pull-ups.
+- Press `ESC` to exit the program.
+- Output videos in `.mp4` format will be saved in the `result/` directory.
 
-- `video/`: 包含检测所需的视频素材。
+## 7. Notes
 
-- `main.py`: 运动姿态识别的主程序。
+- This project is intended for single-person exercise scenarios.
+- Currently, only two exercise types are supported: squats and pull-ups.
+- Reference pose data (sample images) must be prepared in advance and stored in the `base_data/` directory.
 
-- `cameraTest.py`: 用于摄像头测试的程序（仅供测试使用）。
+## 8. Requirements
 
-- `setup.py`: Python 编译优化工具。
-
-- `17pose.png`: 包含17个人体骨骼点的参考图片。
-
-## 5. 环境配置
-
-1. **环境安装**：将项目中`movenet.tar.gz`加压放到`miniconda3`(或者`conda3`) /`envs`下。
-2. **启用终端**：打开自带的`miniconda3 prompt`命令行。
-3. **环境激活**：输入`conda activate movenet`。
-4. **切换路径**：使用`cd`命令进入项目代码所在路径。
-5. **选择模式**：在`main`函数开头处，选择是否启用摄像头及运动类别。
-6. **命令输入**：输入`python main.py`，即可开始运行代码。
-## 6. 使用说明
-- 运行 `main()` 函数启动项目。
-- 可以按键切换不同的运动类型，按下 `1` 键切换为深蹲，按下 `2` 键切换为引体向上。
-- 按下 `ESC` 键退出程序。
-- 代码执行结果会以 .mp4 的格式保存在 `result/` 目录下
-
-## 7. 注意事项
-- 该项目仅适用于单人运动场景。
-- 对于运动类型的切换，目前只支持深蹲和引体向上两种类型。
-- 需要提前准备好基准姿势数据 (样例图片)，并存放在 `base_data/` 目录下。
-
-## 8. 资源需求
-- Python 3.8+
+- Python 3.8 or higher
 - TensorFlow
 - OpenCV
 - scikit-learn
-- movenet 库
+- movenet library
 
-## 9. 参考资料
-- [Movenet GitHub 仓库](https://github.com/tensorflow/tfjs-models/tree/master/pose-detection)
-- [OpenCV 官方文档](https://docs.opencv.org/)
+## 9. References
 
-## 10. 作者信息
-- 作者：Magicherry
-- 版本：v0.5.1
-- 更新日期：2024.4.1
+- [Movenet GitHub Repository](https://github.com/tensorflow/tfjs-models/tree/master/pose-detection)
+- [OpenCV Official Documentation](https://docs.opencv.org/)
+
+## 10. Author
+
+- Author: Magicherry
+- Version: v0.5.1
+- Last updated: 2024.4.1
