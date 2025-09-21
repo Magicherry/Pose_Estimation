@@ -2,7 +2,6 @@
   Real-time Pose Estimation for Exercise Form Analysis <br/>
 </h2>
 
-
 <p align="center">
   <img src="https://img.shields.io/badge/Python-3.8+-blue?logo=python" alt="Python Version">
   <img src="https://img.shields.io/badge/TensorFlow-2.x-orange?logo=tensorflow" alt="TensorFlow">
@@ -23,14 +22,14 @@ This project implements an intelligent exercise monitoring system that uses comp
 ## Features
 
 ### Core Capabilities
-- **Real-time Pose Detection**: Utilizes Google's MoveNet model to detect 17 human keypoints with high accuracy
-- **Exercise Form Analysis**: Compares detected poses against reference movements using cosine similarity matching
-- **Multi-exercise Support**: Currently supports squats and pull-ups with extensible architecture for additional exercises
-- **Repetition Counting**: Automatically counts completed exercise repetitions based on movement patterns
-- **Quality Scoring**: Provides real-time scoring based on movement accuracy and form
-- **Live Camera Integration**: Works with webcam input for real-time analysis
-- **Video Processing**: Supports batch processing of pre-recorded exercise videos
-- **Results Export**: Saves annotated videos with pose overlays and performance metrics
+- Utilizes Google's MoveNet model to detect 17 human keypoints with high accuracy
+- Compares detected poses against reference movements using cosine similarity matching
+- Currently supports squats and pull-ups with extensible architecture for additional exercises
+- Automatically counts completed exercise repetitions based on movement patterns
+- Provides real-time scoring based on movement accuracy and form
+- Works with webcam input for real-time analysis
+- Supports batch processing of pre-recorded exercise videos
+- Saves annotated videos with pose overlays and performance metrics
 
 ### Feature Comparison Matrix
 | Feature | Squat Analysis | Pull-up Analysis | Camera Mode | Video Mode |
@@ -337,10 +336,10 @@ The system logs important events with timestamps:
 
 ## Limitations
 
-- **Single Person**: Optimized for single-person exercise analysis
-- **Exercise Types**: Currently limited to squats and pull-ups
-- **Lighting Conditions**: Performance may vary in poor lighting
-- **Camera Angle**: Works best with side-view camera positioning
+- Optimized for single-person exercise analysis
+- Currently limited to squats and pull-ups
+- Performance may vary in poor lighting
+- Works best with side-view camera positioning
 
 ## License
 
