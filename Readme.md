@@ -270,14 +270,25 @@ stateDiagram-v2
 | Video Rendering | ~10ms | Medium | 25% | 🟡 Moderate |
 | **Total per Frame** | **~40ms** | **-** | **100%** | **25 FPS** |
 
-#### Hardware Performance Requirements
+#### General Hardware Requirements
+
 | Component | Minimum Spec | Recommended Spec | Performance Impact |
-|-----------|--------------|------------------|-------------------|
+|-----------|--------------|------------------|--------------------|
 | CPU | Intel i5-8th gen / AMD Ryzen 5 | Intel i7-10th gen / AMD Ryzen 7 | Frame processing speed |
 | RAM | 8GB | 16GB | Model loading & caching |
 | GPU | Integrated | NVIDIA GTX 1060 / RTX 2060 | Pose detection acceleration |
 | Storage | 2GB free space | 5GB SSD | Model storage & video output |
-| Camera | 720p @ 30fps | 1080p @ 60fps | Input quality & smoothness |
+| Camera | 720p @ 30fps | 1080p @ 30fps | Input quality & smoothness |
+
+#### macOS Hardware Compatibility
+
+| Component | Minimum Spec (Intel Mac) | Recommended Spec (Apple Silicon) | Performance Impact |
+|-----------|--------------------------|----------------------------------|--------------------|
+| CPU | Intel i5 (8th gen) | Apple M1+ | Efficient real-time pose estimation |
+| RAM | 8GB DDR4 | 16GB Unified Memory | Smooth model loading and runtime |
+| GPU | Integrated Intel UHD | Apple Integrated GPU (M-series) | Acceleration for pose detection |
+| Storage | 2GB free space | 5GB SSD | Model cache and export reliability |
+| Camera | Built-in FaceTime HD | External 1080p @ 60fps | Input smoothness and detail quality |
 
 Optimization Strategies:
 - **Model Selection**: Choose between Lightning (speed) and Thunder (accuracy) variants
@@ -334,19 +345,12 @@ The system logs important events with timestamps:
 [12:34:58.456] WARNING: Processing FPS dropped to 18
 ```
 
-## Limitations
-
-- Optimized for single-person exercise analysis
-- Currently limited to squats and pull-ups
-- Performance may vary in poor lighting
-- Works best with side-view camera positioning
-
 ## License
 
 This project is licensed under the Mozilla Public License 2.0 - see the [LICENSE](LICENSE) file for details.
 
 ## Acknowledgments
 
-- Google Research for the MoveNet pose estimation model
-- TensorFlow team for the model hub infrastructure
-- OpenCV community for computer vision tools
+- [Google Research](https://github.com/google-research/movenet) for the MoveNet pose estimation model  
+- [TensorFlow team](https://www.tensorflow.org/hub) for the model hub infrastructure  
+- [OpenCV community](https://opencv.org/) for computer vision tools
